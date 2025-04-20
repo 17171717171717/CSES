@@ -8,3 +8,12 @@
 
 git clean -nd => git clean -fd
 別亂刪除東西
+
+# 把變更加進來（例如你改了很多檔案）
+git add .
+
+# 提交 commit（寫一個訊息）
+git commit -m "更新了本地內容，例如 XXX 題解"
+
+# 推送到 GitHub
+git push origin main
