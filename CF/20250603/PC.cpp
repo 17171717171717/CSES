@@ -34,9 +34,7 @@ const double eps = 1e9+7;
 #define INF 1e9+5
 
 int mod = 998244353;
-int f(int n){
-  return n-n/2-n/3-n/5-n/7+n/6+n/10+n/14+n/15+n/21+n/35-n/30-n/42-n/70-n/105+n/210;
-}
+
 
 signed main()
 {
@@ -46,32 +44,36 @@ signed main()
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
+        int n;
+        cin >> n ;
+        vector<int>v(n);
+        for(int i = 0; i < n; i++){
+            cin >> v[i];
+        }
+        vector<pair<int,int>>vp; // {st,ed}
+        for(int i = 0; i < n; i++){
+            int stt = i;
+            int edd = i;
+            while( i < n && edd < n-1 && v[stt] == v[edd+1] ){
+                edd++;
             }
-            if(s[l]=='0'){
-                ans++;
-                l++;
-            }
+            i = edd;
+            ie(cout << "stt " << stt << " edd "<<edd << endl;)
+            vp.push_back({stt,edd});
+        }
+        int ans = LLONG_MAX;
+        for(auto k : vp){
+            int st = k.first;
+            int ed = k.second;
+            ans = min(ans,v[st] * (st) + v[ed] * (n-ed-1));
         }
         cout << ans << endl;
-    } 
+
+        // cout << endl;
+        
+    }
     
     return 0;
-// g++ -std=c++17 .\CFtmp.cpp  -Dlocal -o tmp
 // g++ .\CFtmp.cpp -Dlocal -o tmp  
 // .\tmp.exe   
 

@@ -46,28 +46,19 @@ signed main()
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
-            }
+        int n;
+        cin >> n ;
+        vi a(n);
+        vi b(n);
+        vin(a);
+        vin(b);
+        vector<vector<int>>dp(2,vector<int>(n+1,0));//max pt and min pt
+        for(int i = 1; i <= n; i++){
+            dp[0][i] = max(dp[0][i-1]-a[i-1],b[i-1]-dp[1][i-1]);
+            dp[1][i] = min(b[i-1]-dp[0][i-1],dp[1][i-1]-a[i-1]);
         }
-        cout << ans << endl;
+        
+        cout << max(dp[0][n],dp[1][n]) << endl;
     } 
     
     return 0;

@@ -34,9 +34,6 @@ const double eps = 1e9+7;
 #define INF 1e9+5
 
 int mod = 998244353;
-int f(int n){
-  return n-n/2-n/3-n/5-n/7+n/6+n/10+n/14+n/15+n/21+n/35-n/30-n/42-n/70-n/105+n/210;
-}
 
 signed main()
 {
@@ -46,28 +43,42 @@ signed main()
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
-            }
+        int n,m;
+        cin >> n >> m;
+        vector<pair<int,int>>floors(m);
+        for(auto &f : floors){
+            int tmp;
+            cin >> tmp;
+            f.first = tmp/100;
+            f.second = tmp%100;
         }
-        cout << ans << endl;
+        sort(floors.begin(),floors.end());
+        
+        vector<vector<int>>ans(n);
+        
+        int l = 0, r = m-1;
+        for(int i = 0 ; i < n; i++){
+            if(i%2 == 0){
+                for(int j = 0 ; j < 3; j++){
+                    // ans[i].push_back(floors[l].first*100+floors[l].second);
+                    // ans[i].push_back(floors[m-1-l].first*100+floors[m-1-l].second);
+                    cout << floors[l].first*100+floors[l].second << " " << floors[m-1-l].first*100+floors[m-1-l].second << " ";
+                }
+                cout << endl;
+                continue;
+            }else{
+                for(int j = 0 ; j < 3; j++){
+                    // ans[i].push_back(floors[l].first*100+floors[l].second);
+                    // ans[i].push_back(floors[m-1-l].first*100+floors[m-1-l].second);
+                    cout << floors[m-1-l].first*100+floors[m-1-l].second << " "<< floors[l].first*100+floors[l].second << " " ;
+                }
+            }
+            l++;
+            cout << endl;
+        }
+
+        
+
     } 
     
     return 0;

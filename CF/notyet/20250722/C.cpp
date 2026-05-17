@@ -46,28 +46,12 @@ signed main()
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
-            }
-        }
-        cout << ans << endl;
+        int n,m;
+        cin >> n >> m;
+        n = f(n-1);
+        m = f(m);
+        cout << -n+m << endl;
+
     } 
     
     return 0;

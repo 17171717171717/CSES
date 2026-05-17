@@ -34,8 +34,40 @@ const double eps = 1e9+7;
 #define INF 1e9+5
 
 int mod = 998244353;
-int f(int n){
-  return n-n/2-n/3-n/5-n/7+n/6+n/10+n/14+n/15+n/21+n/35-n/30-n/42-n/70-n/105+n/210;
+
+int sol(int r) {
+   
+    int a = 2, b = 3, c = 5, d = 7;
+    int ab = a * b;
+    int ac = a * c;
+    int ad = a * d;
+    int bc = b * c;
+    int bd = b * d;
+    int cd = c * d;
+    int abc = a * b * c;
+    int abd = a * b * d;
+    int bcd = b * c * d;
+    int abcd = a * bcd;
+
+
+    int ans = 0;
+    int ans_a = r / a;
+    int ans_b = r / b;
+    int ans_c = r / c;
+    int ans_d = r / d;
+    int ans_ab = r / ab;
+    int ans_ac = r / ac;
+    int ans_ad = r / ad;
+    int ans_bc = r / bc;
+    int ans_bd = r / bd;
+    int ans_cd = r / cd;
+    int ans_abc = r / abc;
+    int ans_abd = r / abd;
+    int ans_bcd = r / bcd;
+    int ans_abcd = r / abcd;
+
+    ans = ans_a + ans_b + ans_c + ans_d - (ans_ab + ans_ac + ans_ad + ans_bc + ans_bd + ans_cd) + (ans_abc + ans_abd + ans_bcd) - (ans_abcd);
+    return ans;
 }
 
 signed main()
@@ -46,32 +78,31 @@ signed main()
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
+        int n, c;
+        cin >> n >> c;
+        vector<int>v(n);
+        REP(i,n){
+            cin >> v[i];
+        }
+        int ans = n;
+        sort(al(v));
+        // cout << v[0] << endl;
+        for(int i = 0 ; i < n; i++){
+            for(int j = n-1 ; j>=0; j--){
+                if(v[j]<=c){
+                    ans--;
+                    v[j] = c+1;
+                    while(j--){
+                        v[j]*=2;
+                    }
+                    break;
                 }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
             }
         }
         cout << ans << endl;
-    } 
+    }
     
     return 0;
-// g++ -std=c++17 .\CFtmp.cpp  -Dlocal -o tmp
 // g++ .\CFtmp.cpp -Dlocal -o tmp  
 // .\tmp.exe   
 

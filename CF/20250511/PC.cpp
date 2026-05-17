@@ -34,9 +34,39 @@ const double eps = 1e9+7;
 #define INF 1e9+5
 
 int mod = 998244353;
-int f(int n){
-  return n-n/2-n/3-n/5-n/7+n/6+n/10+n/14+n/15+n/21+n/35-n/30-n/42-n/70-n/105+n/210;
-}
+
+void solve(int col, int row, int n, int val, vector<vector<int>>&ans){
+    if(row == n || col == n || row < 0 || col < 0 || ans[row][col] != -1) return;
+    ans[row][col] = val;
+    val--;
+    // go right
+    while(col <= n-2 && ans[row][col+1] == -1){
+        col++;
+        ans[row][col] = val;
+        val--;
+    }
+    // go down
+    while(row <= n-2 && ans[row+1][col] == -1){
+        row++;
+        ans[row][col] = val;
+        val--;
+    }
+    // go left
+    while(col >= 1 && ans[row][col-1] == -1){
+        col--;
+        ans[row][col] = val;
+        val--;
+    }
+    // go up
+    while(row >= 1 && ans[row-1][col] == -1){
+        row--;
+        ans[row][col] = val;
+        val--;
+    }
+
+    solve(row, col+1, n, val, ans);
+    return ;
+} 
 
 signed main()
 {
@@ -46,32 +76,22 @@ signed main()
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
+        int n;
+        cin >> n;
+        vector<vector<int>>ans(n,vector<int>(n,-1));
+        solve(0, 0, n, n*n-1, ans);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                cout << ans[i][j] << ' ';
             }
-            if(s[l]=='0'){
-                ans++;
-                l++;
-            }
+            cout << endl;
         }
-        cout << ans << endl;
-    } 
+        
+        // cout << endl;
+        
+    }
     
     return 0;
-// g++ -std=c++17 .\CFtmp.cpp  -Dlocal -o tmp
 // g++ .\CFtmp.cpp -Dlocal -o tmp  
 // .\tmp.exe   
 

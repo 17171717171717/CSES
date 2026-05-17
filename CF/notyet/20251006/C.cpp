@@ -34,9 +34,7 @@ const double eps = 1e9+7;
 #define INF 1e9+5
 
 int mod = 998244353;
-int f(int n){
-  return n-n/2-n/3-n/5-n/7+n/6+n/10+n/14+n/15+n/21+n/35-n/30-n/42-n/70-n/105+n/210;
-}
+
 
 signed main()
 {
@@ -46,29 +44,64 @@ signed main()
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
+        int n;
+        cin >> n;
         str s;
         cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
-            }
+
+        vector<int>as(n,0);
+        vector<int>bs(n,0);
+        vector<int>badiff(n,0);
+        if(s[0]=='a'){
+            as[0] = 1;
+        }else{
+            bs[0] = 1;
         }
-        cout << ans << endl;
-    } 
+        badiff[0] = bs[0] - as[0];
+
+        for(int i = 1; i < n; i++){
+            as[i] = as[i-1];
+            bs[i] = bs[i-1]; 
+            if(s[i] == 'a'){
+                as[i]++;
+            }else{
+                bs[i]++;
+            }
+            badiff[i] = bs[i] - as[i]; // b cnt - a cnt
+        }
+        int target = badiff[n-1];
+        if(target == 0){
+            cout << 0 << endl;
+            continue;
+        }
+
+        unordered_map<int, int>m; // diff / where
+        int ans = n+1;
+        m[0] = -1; 
+
+        for(int i = 0; i < n; i++){
+            int need_to_diff = badiff[i] - target;
+            if(m.count(need_to_diff)){
+                int pre = m[need_to_diff];
+                ans = min(ans, i - pre);
+            }
+
+            // if(m.find(badiff[i])==m.end()){
+            //     m[badiff[i]] = i;
+            // }
+            // if(m.find(badiff[i])==m.end()){
+                m[badiff[i]] = i;
+            // }
+        }
+
+        if(ans >= n){
+            cout << -1 << endl;
+        }else{
+            cout << ans << endl;
+        }
+
+
+    }
     
     return 0;
 // g++ -std=c++17 .\CFtmp.cpp  -Dlocal -o tmp

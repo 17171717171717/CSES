@@ -46,28 +46,59 @@ signed main()
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
-            }
+        int n;
+        cin >> n;
+        vi a(n),b(n);
+        vin(a);
+        vin(b);
+        int diff = 0;
+        int odd_A=0;
+        int odd_B=0;
+        int last_choose = -1;
+        for(int i = 0; i < n; i++){
+            if(a[i] != b[i])last_choose=i;
+
+            if(a[i]==1)odd_A++;
+            if(b[i]==1)odd_B++;
+                
         }
-        cout << ans << endl;
+
+        odd_A &= 1;
+        odd_B &= 1;
+        bool Maiwin = false;
+        bool Ajisaiwin = false;
+        
+        
+        
+        if(last_choose & 1){
+            Maiwin = true;
+        }else{
+            Ajisaiwin = true;
+        }
+        // 0 0 1 1
+        // 1 1 0 0 => tie
+        
+        if(last_choose == -1){
+            if(odd_A==1){
+                if(odd_B==1)cout<<"Tie" << endl;
+                else cout << "Ajisai"<< endl;
+            }else{
+                if(odd_B==1)cout<<"Mai" << endl;
+                else cout << "Tie"<< endl;
+            }
+            continue;
+        }
+
+        if(odd_A==odd_B ){
+            cout << "Tie" << endl;
+        }else if(Maiwin){
+            cout << "Mai" << endl;
+        }else if(Ajisaiwin){
+            cout << "Ajisai" << endl;
+        }else{
+            cout << "Tie" << endl;
+        }
+
     } 
     
     return 0;

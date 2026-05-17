@@ -34,9 +34,6 @@ const double eps = 1e9+7;
 #define INF 1e9+5
 
 int mod = 998244353;
-int f(int n){
-  return n-n/2-n/3-n/5-n/7+n/6+n/10+n/14+n/15+n/21+n/35-n/30-n/42-n/70-n/105+n/210;
-}
 
 signed main()
 {
@@ -46,28 +43,17 @@ signed main()
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
+        int n,m;
+        cin >> n;
+        int a, b, c, d;
         int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
-            }
+        for(int i = 0; i < n; i++){
+            cin >> a >> b >> c >> d;
+            if(b>d)ans+=(a+b-d);
+            else if(a>c)ans+=a-c;
         }
         cout << ans << endl;
+
     } 
     
     return 0;

@@ -34,12 +34,12 @@ const double eps = 1e9+7;
 #define INF 1e9+5
 
 int mod = 998244353;
-int f(int n){
-  return n-n/2-n/3-n/5-n/7+n/6+n/10+n/14+n/15+n/21+n/35-n/30-n/42-n/70-n/105+n/210;
-}
 
+ 
 signed main()
 {
+
+
     fastios
     ie(freopen("test_input.txt", "r", stdin);)
 
@@ -48,30 +48,43 @@ signed main()
     while(kase--){
         int n, k;
         cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
+        vector<int>v(n);
+        int maxbox = LLONG_MIN;
+        int minbox = LLONG_MAX;
+        int total = 0;
+        for(int i = 0; i < n ; i++){
+            cin >> v[i];
+            maxbox = max(maxbox,v[i]);
+            minbox = min(minbox,v[i]);
+            total += v[i];
+        }
+        int cur = 0;
+
+        for(int i = 0; i < n; i++){
+            if(v[i]==maxbox)cur++;
+        }
+
+        if((maxbox - minbox - 1) > k){
+            cout << "Jerry" << endl;
+            continue;    
+        }
+        if((maxbox - minbox - 1 == k) && cur>1){
+            cout << "Jerry" << endl;    
+        }else{
+            if(total & 1){
+                cout << "Tom" << endl;
+            }else{
+                cout << "Jerry" << endl;
             }
         }
-        cout << ans << endl;
-    } 
+
+
+
+        
+
+    }
     
     return 0;
-// g++ -std=c++17 .\CFtmp.cpp  -Dlocal -o tmp
 // g++ .\CFtmp.cpp -Dlocal -o tmp  
 // .\tmp.exe   
 

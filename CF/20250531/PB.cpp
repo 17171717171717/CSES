@@ -34,9 +34,6 @@ const double eps = 1e9+7;
 #define INF 1e9+5
 
 int mod = 998244353;
-int f(int n){
-  return n-n/2-n/3-n/5-n/7+n/6+n/10+n/14+n/15+n/21+n/35-n/30-n/42-n/70-n/105+n/210;
-}
 
 signed main()
 {
@@ -44,30 +41,51 @@ signed main()
     ie(freopen("test_input.txt", "r", stdin);)
 
     int kase;
+    
+    vector<int>twos(1e5+1);
+    twos[0] = 1;
+    for(int i = 1; i < twos.size(); i++){
+        twos[i] = twos[i-1]*2;
+        twos[i] = twos[i] % 998244353;
+    }
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
-            }
+        int n;
+        cin >> n;
+        vector<int>q(n);
+        REP(i,n){
+            cin >> q[i];
         }
-        cout << ans << endl;
+        vector<int>p(n);
+        
+        REP(i,n){
+            cin >> p[i];
+        }
+        vector<int>ans;
+        int q_idx = 0;
+        int p_idx = 0;
+        for(int i = 0 ; i < n; i++){
+            if(q[q_idx] <= q[i]){
+                q_idx = i;
+            }
+            if(p[p_idx] <= p[i]){
+                p_idx = i;
+            }
+
+            if(q[q_idx] > p[p_idx]){
+                ans.push_back((twos[q[q_idx]]+twos[p[i-q_idx]])%998244353);
+            }else if(q[q_idx] < p[p_idx]){
+                ans.push_back((twos[p[p_idx]]+twos[q[i-p_idx]])%998244353);
+            }else{
+                if(q[i-p_idx] >= p[i-q_idx]){                    
+                    ans.push_back((twos[p[p_idx]]+twos[q[i-p_idx]])%998244353);
+                }else{
+                    ans.push_back((twos[p[i-q_idx]]+twos[q[q_idx]])%998244353);
+                }
+            }
+            cout<< ans[i] << " ";
+        }
+        cout << endl;
     } 
     
     return 0;

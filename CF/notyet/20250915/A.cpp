@@ -34,9 +34,7 @@ const double eps = 1e9+7;
 #define INF 1e9+5
 
 int mod = 998244353;
-int f(int n){
-  return n-n/2-n/3-n/5-n/7+n/6+n/10+n/14+n/15+n/21+n/35-n/30-n/42-n/70-n/105+n/210;
-}
+
 
 signed main()
 {
@@ -46,32 +44,40 @@ signed main()
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
+        int n ;
+        cin >> n;
+        vector<int>v(n);
+        vin(v);
+        REP(i,n){
+            v[i] = v[i] % 3;
+        }
+
+        vi pre(n);
+        pre[0] = v[0];
+        for(int i = 1; i < n; i++){
+            pre[i] = (v[i] + pre[i-1]);
+            
+        }
+        int ans1 = 0, ans2 = 0;
+        ie(debugv(pre););
+        for(int i = 0; i < n-2; i++){
+            for(int j = i+1; j < n-1; j++ ){
+                int s1 = pre[i]%3;
+                int s2 = (pre[j] - pre[i])%3;
+                int s3 = (pre[n-1] - pre[j])%3;
+                if(s1 == s2 && s2 == s3){
+                    ans1 = i+1;
+                    ans2 = j+1;
+                }else if(s1 != s2 && s1 != s3 && s2 != s3){
+                    ans1 = i+1;
+                    ans2 = j+1;
                 }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
             }
         }
-        cout << ans << endl;
-    } 
+        cout << ans1 <<" " << ans2 << endl;
+    }
     
     return 0;
-// g++ -std=c++17 .\CFtmp.cpp  -Dlocal -o tmp
 // g++ .\CFtmp.cpp -Dlocal -o tmp  
 // .\tmp.exe   
 

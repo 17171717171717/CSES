@@ -34,44 +34,47 @@ const double eps = 1e9+7;
 #define INF 1e9+5
 
 int mod = 998244353;
-int f(int n){
-  return n-n/2-n/3-n/5-n/7+n/6+n/10+n/14+n/15+n/21+n/35-n/30-n/42-n/70-n/105+n/210;
-}
 
+ 
 signed main()
 {
+
+
     fastios
     ie(freopen("test_input.txt", "r", stdin);)
 
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
-            }
+        int n;
+        cin >> n;
+        vector<int>v(n);
+        for(int i = 0; i < n ; i++){
+            cin >> v[i];
         }
-        cout << ans << endl;
-    } 
-    
+        vector<int>maxv(n);
+        maxv[0] = v[0];
+        for(int i = 1; i<n;i++){
+            maxv[i] = max(maxv[i-1] , v[i]);
+        }
+        // ie(debugv(maxv))
+        vector<int>ans;
+        ans.push_back(maxv[n-1]);
+        vector<int>suf(n+1);
+        suf[n] = 0;
+        for(int i = n-1; i>=0 ;i--){
+            suf[i] = suf[i+1] + v[i];
+            ans.push_back(suf[i]+maxv[i-1]);
+        }
+
+        for(int i = 0; i < n; i++){
+            cout << ans[i] << " ";
+        }
+        
+        cout << endl;
+
+    }
     return 0;
-// g++ -std=c++17 .\CFtmp.cpp  -Dlocal -o tmp
 // g++ .\CFtmp.cpp -Dlocal -o tmp  
 // .\tmp.exe   
 

@@ -46,28 +46,16 @@ signed main()
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
+        int n;
+        cin >> n;
         int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
+        for(int a = 0; a <= 50; a++){
+            for(int b = 0; b <= 50; b++){
+                if((4*a + 2*b)==n)ans++;
             }
         }
         cout << ans << endl;
+
     } 
     
     return 0;

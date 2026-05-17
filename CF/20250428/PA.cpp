@@ -34,44 +34,30 @@ const double eps = 1e9+7;
 #define INF 1e9+5
 
 int mod = 998244353;
-int f(int n){
-  return n-n/2-n/3-n/5-n/7+n/6+n/10+n/14+n/15+n/21+n/35-n/30-n/42-n/70-n/105+n/210;
-}
 
+ 
 signed main()
 {
+
+
     fastios
     ie(freopen("test_input.txt", "r", stdin);)
 
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
-            }
+        int n;
+        vector<int>v(3);
+        cin >> v[0] >> v[1] >> v[2];
+        int t;
+        t = v[0]+v[1]+v[2];
+        if(t % 3){
+            cout << "NO" << endl;
         }
-        cout << ans << endl;
-    } 
-    
+        else if(t/3 < v[0] || t/3 < v[1])cout << "NO" << endl;
+        else cout << "YES" << endl;
+    }
     return 0;
-// g++ -std=c++17 .\CFtmp.cpp  -Dlocal -o tmp
 // g++ .\CFtmp.cpp -Dlocal -o tmp  
 // .\tmp.exe   
 

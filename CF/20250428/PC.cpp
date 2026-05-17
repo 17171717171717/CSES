@@ -1,0 +1,123 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define REP(i, n) for(int i = 0; i < n; i++)
+#define REP1(i, n) for(int i = 1; i <= n; i++)
+#define vin(v) for( int i = 0 ; i < v.size() ; i++ ) cin >> v[i];
+#define vpiiin(v) for( int i = 0 ; i < v.size() ; i++ ) cin >> v[i].f >> v[i].s;
+#define debug(x) cout << #x << " = " << x << "\n";
+#define debugv(v) for (int i = 0; i < v.size(); i++) cout << v[i] << " "; cout << endl;
+template <typename T>
+using vec = vector<T>;
+#define pb push_back
+#define mp make_pair
+#define al(x) x.begin(), x.end()
+using pii = pair<long long, long long>;
+using vi = vector<long long>;
+using vpii = vector<pair<int,int>>;
+using ll = long long ;
+using str = string;
+using um = unordered_map<int,int>;
+#define F first
+#define S second
+#define min_pq(type) priority_queue<type, vector<type>, greater<type>>
+#define pq(type) priority_queue<type>
+const double eps = 1e9+7;
+#define int long long 
+#define fastios ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+
+#ifdef local
+    #define ie(x) x
+#else
+    #define ie(x)
+#endif
+#define INF 1e9+5
+
+int mod = 998244353;
+
+ 
+signed main()
+{
+
+
+    fastios
+    ie(freopen("test_input.txt", "r", stdin);)
+
+    int kase;
+    cin >> kase;
+    while(kase--){
+        int n;
+        cin >> n;
+        str s;
+        cin >> s;
+        if(n == 2){
+            if(s[0]=='A')cout << "Alice";
+            else cout << "Bob";
+            cout << endl;
+            continue;
+        }
+
+        if(s[0] == s[n-1]){
+            if(s[0]=='A')cout << "Alice";
+            else cout << "Bob";
+            cout << endl;
+            continue;
+        }
+
+        vector<int>A;
+        vector<int>B;
+        for(int i = 0; i < n; i++){
+            if(s[i]=='A')A.pb(i);
+            else B.pb(i);
+        }
+
+        bool  awin=false;
+        // 0, n-1, 1~n-2
+        for(auto Acard : A){
+            bool bwin = false;
+            if(Acard==0){
+                for(auto Bcard: B){
+                    if(1 <= Bcard && Bcard <= n-2){
+                        bwin = true;
+                        break;
+                    }
+                }
+            }
+
+            else if(Acard==n-1){
+                for(auto Bcard: B){
+                    if(Bcard == 0){
+                        bwin = true;
+                        break;
+                    }
+                }
+            }
+            else{
+                for(auto Bcard: B){
+                    if(Bcard>Acard){
+                        bwin = true;
+                        break;
+                        }
+                }
+            }
+
+            if(!bwin){
+                awin = true;
+                break;
+            }
+        }
+        if(awin)cout << "Alice";
+        else cout << "Bob";
+        cout << endl;
+
+    }
+    
+    return 0;
+// g++ .\CFtmp.cpp -Dlocal -o tmp  
+// .\tmp.exe   
+
+
+
+}
+
+

@@ -10,6 +10,8 @@
         "ostream": "cpp",
         "iosfwd": "cpp",
         "system_error": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "algorithm": "cpp",
+        "limits": "cpp"
     }
 }

@@ -34,10 +34,29 @@ const double eps = 1e9+7;
 #define INF 1e9+5
 
 int mod = 998244353;
-int f(int n){
-  return n-n/2-n/3-n/5-n/7+n/6+n/10+n/14+n/15+n/21+n/35-n/30-n/42-n/70-n/105+n/210;
-}
 
+int gcd(int a, int b){
+    if(b==0)return a;
+    return gcd(b, a%b);
+}
+bool isprime(int n){
+    for(int i = 2; i*i <= n; i++){
+        if(n%i == 0)return false;
+    }
+    return true;
+}
+vector<int> genprime(){
+    int limit = 1e18;
+    int cur = 2;
+    vector<int>primes{2};
+    for(int i = 3; ;i++){
+        if(isprime(i)){
+            primes.push_back(i);
+            cur*=i;
+            if(cur > limit)return primes;
+        }
+    }
+}
 signed main()
 {
     fastios
@@ -46,28 +65,25 @@ signed main()
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
+        int n;
+        cin >> n;
+        vector<int>v(n);
+        for(int i = 0; i < n; i++){
+            cin >> v[i];
+        }
+        int min_gcd = v[0];
+        for(int i = 0; i < n-1; i++){
+            min_gcd=gcd(min_gcd, v[i+1]);
+        }
+        vector<int>primes = genprime();
+
+        for(auto p : primes){
+            int x = gcd(min_gcd,p);
+            if(x==1){
+                cout << p << endl;
+                break;
             }
         }
-        cout << ans << endl;
     } 
     
     return 0;

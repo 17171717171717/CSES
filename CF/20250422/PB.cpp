@@ -6,7 +6,7 @@ using namespace std;
 #define vin(v) for( int i = 0 ; i < v.size() ; i++ ) cin >> v[i];
 #define vpiiin(v) for( int i = 0 ; i < v.size() ; i++ ) cin >> v[i].f >> v[i].s;
 #define debug(x) cout << #x << " = " << x << "\n";
-#define debugv(v) for (int i = 0; i < v.size(); i++) cout << v[i] << " "; cout << endl;
+#define debugvec(v) for (int i = 0; i < v.size(); i++) cout << v[i] << " "; cout << endl;
 template <typename T>
 using vec = vector<T>;
 #define pb push_back
@@ -31,52 +31,61 @@ const double eps = 1e9+7;
 #else
     #define ie(x)
 #endif
-#define INF 1e9+5
+#define INF 1000000000
 
 int mod = 998244353;
-int f(int n){
-  return n-n/2-n/3-n/5-n/7+n/6+n/10+n/14+n/15+n/21+n/35-n/30-n/42-n/70-n/105+n/210;
-}
 
+ 
 signed main()
 {
+
+
     fastios
     ie(freopen("test_input.txt", "r", stdin);)
 
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
+        int n;
+        cin >> n;
+        string s;
         cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
-            }
+        int ans;
+        int cnt = 0;
+        if(s[0]=='0')ans = 1;
+        else{
+            ans = 2;
+            cnt = 1;
+        }
+
+        if(n==1){
+            cout << ans << endl;
+            continue;
+        }
+
+        for(int i = 1; i < n; i++){
+            s[i] == s[i-1] ? ans+=1 : ans+=2;
+            if(s[i] != s[i-1])cnt++;
+        }
+        // case 1 : 101 => 011, 6-2
+        // case 2 : 00110 => 00011, 7-1
+        // case 3 : 11100 => 00011, 7-1
+        if(cnt >= 3){
+            ans -= 2;
+        }else if(cnt == 2){
+            ans -= 1;
         }
         cout << ans << endl;
-    } 
-    
-    return 0;
-// g++ -std=c++17 .\CFtmp.cpp  -Dlocal -o tmp
-// g++ .\CFtmp.cpp -Dlocal -o tmp  
-// .\tmp.exe   
 
+        
+        
+    }
+    return 0;
+    
 
 
 }
 
+// g++ .\CFtmp.cpp -Dlocal -o tmp  
+// .\tmp.exe   
 

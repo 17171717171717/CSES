@@ -46,28 +46,32 @@ signed main()
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
+        int n;
+        cin >> n;
+        vi v(n);
+        vin(v);
+
+        if(v[0]==-1){
+            if(v[n-1]==-1){
+                v[0]=0;
+                v[n-1]=0;
+            }else{
+                v[0]=v[n-1];
             }
         }
-        cout << ans << endl;
+        if(v[n-1]==-1){
+            v[n-1] = v[0];
+        }
+
+        for(int i = 1; i < n-1; i++){
+            if(v[i]==-1)v[i]=0;
+        }
+        cout << llabs(v[n-1] - v[0]) << endl;
+        for(int i = 0; i < n; i++){
+            cout << v[i] << " ";
+        }
+        cout << endl;
+
     } 
     
     return 0;

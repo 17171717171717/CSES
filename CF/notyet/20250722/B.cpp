@@ -34,8 +34,10 @@ const double eps = 1e9+7;
 #define INF 1e9+5
 
 int mod = 998244353;
-int f(int n){
-  return n-n/2-n/3-n/5-n/7+n/6+n/10+n/14+n/15+n/21+n/35-n/30-n/42-n/70-n/105+n/210;
+
+int gcd(int a, int b) {
+   if (a % b == 0) return b;
+   return gcd(b, a % b);
 }
 
 signed main()
@@ -46,32 +48,21 @@ signed main()
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
-            }
+        int a, b, k;
+        cin >> a >> b >> k;
+        if(a <= k && b <= k){
+            cout << 1 << endl;
+            continue;;
         }
-        cout << ans << endl;
-    } 
+        int maxmod = gcd(a, b);
+        if(max(a,b)/maxmod <= k){
+            cout << 1 << endl;
+        }else{
+            cout << 2 << endl;
+        }
+    }
     
     return 0;
-// g++ -std=c++17 .\CFtmp.cpp  -Dlocal -o tmp
 // g++ .\CFtmp.cpp -Dlocal -o tmp  
 // .\tmp.exe   
 

@@ -34,49 +34,54 @@ const double eps = 1e9+7;
 #define INF 1e9+5
 
 int mod = 998244353;
-int f(int n){
-  return n-n/2-n/3-n/5-n/7+n/6+n/10+n/14+n/15+n/21+n/35-n/30-n/42-n/70-n/105+n/210;
-}
 
+ 
 signed main()
 {
+
+
     fastios
     ie(freopen("test_input.txt", "r", stdin);)
 
     int kase;
     cin >> kase;
     while(kase--){
-        int n, k;
-        cin >> n >> k;
-        str s;
-        cin >> s;
-        int l = 0, r = n-1;
-        int ans = 0;
-        while(l<n){
-            if(s[l]=='1'){
-                l++;
-                int tmp_k = 0;
-                while(s[l]=='0' && l<n && tmp_k<k){
-                    l++;
-                    tmp_k++;
-                }
-                continue;
-            }
-            if(s[l]=='0'){
-                ans++;
-                l++;
+        int N, M; cin >> N >> M;
+        vector<int> a(N), b(M);
+        for(int i = 0; i < N; i++) cin >> a[i];
+        for(int i = 0; i < M; i++) cin >> b[i];
+        vector<int> backwards_match(M);
+        int j = N - 1;
+        for(int i = M - 1; i >= 0; i--){
+            while(j >= 0 && a[j] < b[i]) j--;
+            backwards_match[i] = j--;
+        }
+        vector<int> forwards_match(M);
+        j = 0;
+        for(int i = 0; i < M; i++){
+            while(j < N && a[j] < b[i]) j++;
+            forwards_match[i] = j++;
+        }
+        if(forwards_match.back() < N){
+            cout << 0 << endl;
+            continue;
+        }
+        int ans = INF;
+        for(int i = 0; i < M; i++){
+            int match_previous = i == 0 ? -1 : forwards_match[i - 1];
+            int match_next = i + 1 == M ? N : backwards_match[i + 1];
+            if(match_next > match_previous){
+                ans = min(ans, b[i]);
             }
         }
-        cout << ans << endl;
-    } 
-    
+        cout << (ans == INF ? -1 : ans) << "\n";
+    }
     return 0;
-// g++ -std=c++17 .\CFtmp.cpp  -Dlocal -o tmp
-// g++ .\CFtmp.cpp -Dlocal -o tmp  
-// .\tmp.exe   
-
+    
 
 
 }
 
+// g++ .\CFtmp.cpp -Dlocal -o tmp  
+// .\tmp.exe   
 
